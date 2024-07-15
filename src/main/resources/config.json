@@ -1,0 +1,9 @@
+{
+  "bot-token" : "g",
+  "api-key" : "",
+  "lang" : "ru",
+  "location" : {
+    "lat" : 0,
+    "lon" : 0
+  }
+}
