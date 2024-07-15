@@ -1,23 +1,16 @@
 package ru.dfhub.test
 
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.FileReader
-import java.lang.StringBuilder
+import java.nio.charset.Charset
+import java.nio.file.Files
+import kotlin.io.path.Path
 
-class Config {
-    companion object {
-        fun getConfig(): JSONObject {
-            val buffer = BufferedReader(FileReader("./config.json"))
-            var line: String?
-            val configContent = StringBuilder()
-            while (true) {
-                line = buffer.readLine();
-                if (line == null) break
-                configContent.append(line)
-            }
-
-            return JSONObject(configContent.toString())
-        }
+object Config {
+    fun getConfig(): JSONObject = if (Files.exists(Path("./config.json"))) {
+        JSONObject(Files.readString(Path("./config.json")))
+    } else {
+        val resource = this::class.java.classLoader.getResource("config.json")!!.readBytes()
+        Files.write(Path("./config.json"), resource)
+        JSONObject(resource.toString(Charset.defaultCharset()))
     }
 }

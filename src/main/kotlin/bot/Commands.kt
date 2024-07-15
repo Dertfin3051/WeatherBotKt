@@ -1,21 +1,20 @@
 package ru.dfhub.test.bot
 
-import org.json.JSONObject
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import ru.dfhub.test.Config
 import ru.dfhub.test.api.WeatherApi
 import ru.dfhub.test.api.WeatherData
+import ru.dfhub.test.translations
 
 /**
  * Класс, который несёт основной функционал бота
  * Содержит комадны бота, каждая из которых находится в отдельном методе
  */
-class Commands {
-
+object Commands {
     fun start(chatId: Long) {
         val sendMessage: SendMessage = SendMessage.builder()
             .chatId(chatId)
-            .text("**Добро пожаловать!**\n\nВ данном боте вы можете узнать погоду в городе Можайск. Для того, чтобы начать, введите команду /weather")
+            .text(translations.getString("weatherData.start"))
             .parseMode("Markdown")
             .build()
         Bot.client.execute(sendMessage)

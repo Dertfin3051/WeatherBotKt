@@ -10,12 +10,9 @@ import ru.dfhub.test.token
  * Основной класс бота
  */
 class Bot : LongPollingSingleThreadUpdateConsumer {
-
     companion object {
-        val client: TelegramClient = OkHttpTelegramClient(token);
+        val client: TelegramClient = OkHttpTelegramClient(token)
     }
-
-    private val commands = Commands() // Команды бота
 
     /**
      * Обработчик бота *(aka. метод update)*
@@ -25,10 +22,10 @@ class Bot : LongPollingSingleThreadUpdateConsumer {
         if (update!!.hasMessage() && update.message.hasText()) {
             when (update.message.text) {
                 "/start" -> {
-                    commands.start(update.message.chatId)
+                    Commands.start(update.message.chatId)
                 }
                 "/weather" -> {
-                    commands.weather(update.message.chatId)
+                    Commands.weather(update.message.chatId)
                 }
             }
         }
