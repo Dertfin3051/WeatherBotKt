@@ -15,21 +15,8 @@ import java.util.stream.Stream
  * @param apiKey API-Ключ для OpenWeather
  * @param lang Язык *(ru/en)*. Хз, зачем он тут, но пусть будет
  */
-open class WeatherApi(
-    val lat: Double,
-    val lon: Double,
-    val apiKey: String,
-    val lang: String,
-) {
-    var url: String = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&lang={lang}&units=metric"
-
-    init {
-        url = url
-            .replace("{lat}", lat.toString())
-            .replace("{lon}", lon.toString())
-            .replace("{API key}", apiKey)
-            .replace("{lang}", lang)
-    }
+open class WeatherApi(lat: Double, lon: Double, apiKey: String, lang: String) {
+    private var url: String = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&lang=$lang&units=metric"
 
     fun getWeatherData(): JSONObject {
         val httpClient: HttpClient = HttpClient.newHttpClient();

@@ -1,34 +1,20 @@
 package ru.dfhub.test.api
 
 import org.json.JSONObject
+import ru.dfhub.test.translations
 
 /**
  * Класс, который содержит себе информацию о погоде в удобном виде
  * @param data Результат WeatherApi.getWeatherData();
  */
 class WeatherData(data: JSONObject) {
+    var summary: String = data.getJSONArray("weather").getJSONObject(0).getString("description")
+    var tempMax: Float = data.getJSONObject("main").getFloat("temp_max")
+    var tempMin: Float = data.getJSONObject("main").getFloat("temp_min")
+    var windSpeed: Float = data.getJSONObject("wind").getFloat("speed")
+    var clouds: Int = data.getJSONObject("clouds").getInt("all")
 
-    var summary: String
-    var tempMax: Float
-    var tempMin: Float
-    var windSpeed: Float
-    var clouds: Int
-
-    private val info: String = """
-        *Погода в Можайске*
-            
-        Сегодня *{summary}*, температура составляет от *{min}°С* до *{max}°С.*
-        Скорость ветра: *{wind_speed} м/с*
-        Облачность: *{clouds}%*
-    """.trimIndent()
-
-    init {
-        summary = data.getJSONArray("weather").getJSONObject(0).getString("description")
-        tempMax = data.getJSONObject("main").getFloat("temp_max")
-        tempMin = data.getJSONObject("main").getFloat("temp_min")
-        windSpeed = data.getJSONObject("wind").getFloat("speed")
-        clouds = data.getJSONObject("clouds").getInt("all")
-    }
+    private val info: String = translations.getString("weatherData.info")
 
     fun getInfo(): String {
         return info
@@ -38,5 +24,4 @@ class WeatherData(data: JSONObject) {
             .replace("{wind_speed}", windSpeed.toString())
             .replace("{clouds}", clouds.toString())
     }
-
 }

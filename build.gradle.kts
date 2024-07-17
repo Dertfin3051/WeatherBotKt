@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.23"
+    application
 }
 
 group = "ru.dfhub.test"
@@ -23,6 +24,14 @@ kotlin {
     jvmToolchain(21)
 }
 
-tasks.withType<JavaCompile>().configureEach() {
+application {
+    mainClass = "ru.dfhub.test.MainKt"
+}
+
+tasks.withType<JavaCompile>().configureEach {
     options.encoding = Charsets.UTF_8.name()
+}
+
+tasks.processResources {
+    filteringCharset = Charsets.UTF_8.name()
 }
